@@ -17,7 +17,7 @@ O script lê um CSV com usuários e senhas, gera o hash SHA-1 de cada senha e co
 Precisa do Python 3 e das dependências `requests` e `reportlab`. Recomendo usar um ambiente virtual para não conflitar com os pacotes do seu sistema:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/password-leak-checker.git
+git clone https://github.com/gabriellebonet/password-leak-checker.git
 cd password-leak-checker
 
 # cria e ativa o ambiente virtual
