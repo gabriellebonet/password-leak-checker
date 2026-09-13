@@ -9,7 +9,7 @@ O script lê um CSV com usuários e senhas, gera o hash SHA-1 de cada senha e co
 - Só os **5 primeiros caracteres** do hash são enviados à API.
 - A API devolve uma lista de hashes com aquele prefixo e quantas vezes cada um vazou.
 - A comparação do restante do hash acontece **localmente**, e o número de vazamentos é registrado.
-- Usuários com senha encontrada são listados no PDF `relatorio_senhas.pdf`.
+- Usuários com senha encontrada são listados no PDF gerado.
 - A cada consulta o script aguarda 1,3s para respeitar o rate limit da API.
 
 ## Como usar
@@ -26,13 +26,28 @@ source venv/bin/activate
 
 # instala as dependências dentro do ambiente
 pip install requests reportlab
-
-python checker.py
 ```
 
-> No Windows, a ativação é `venv\Scripts\activate`.
+Rode o script passando o CSV com as credenciais:
 
-O script pede o nome do CSV com as credenciais (se você digitar sem a extensão, ele adiciona `.csv` automaticamente). Formato esperado do CSV:
+```bash
+python checker.py usuarios_exemplo.csv
+```
+
+Opções disponíveis (veja todas com `python checker.py -h`):
+
+| Argumento | O que faz |
+|---|---|
+| `file_input` | Arquivo CSV com as credenciais |
+| `--saida` | Nome do PDF gerado (padrão: `relatorio_senhas.pdf`) |
+
+Exemplo completo:
+
+```bash
+python checker.py usuarios_exemplo.csv --saida relatorio.pdf
+```
+
+Formato esperado do CSV:
 
 ```csv
 usuario,senha
@@ -48,7 +63,7 @@ Com o script rodando:
 - **Senha segura:** use uma senha longa e aleatória → aparece "Zero vazamentos!" e o usuário não vai pro PDF.
 - **Sem internet / API fora do ar:** o script avisa o erro daquele usuário e continua com os demais.
 
-No final da execução, abra o `relatorio_senhas.pdf` gerado na pasta do projeto.
+No final da execução, abra o PDF gerado na pasta do projeto.
 
 ## Sobre
 
