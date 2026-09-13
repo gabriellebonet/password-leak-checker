@@ -3,6 +3,7 @@ import hashlib
 import requests
 import time
 from pdf_generate import create_pdf
+import argparse
 
 def get_credential(db, resultados):
    with open(db, encoding='utf-8') as arquivo:
@@ -36,12 +37,24 @@ def check_hash(pref_hash, sufi_hash, credencial, resultados):
    except requests.exceptions.RequestException as e:
       print(f"Erro na consulta do usuário {credencial['usuario']}: {e}")
 
-if __name__ == '__main__':
-   resultados = []
+def main():
+   parser = argparse.ArgumentParser()
+   parser.add_argument("file_input", help="Insira o nome do documento com as credenciais")
+   parser.add_argument("--saida", default="relatorio_senhas.pdf", help="Nome do pdf gerado com o relatório de vazamentos")
+   args = parser.parse_args()
 
-   arquivo = input("Insira o nome do documento com as credenciais que vai ser analizado: ")
+   arquivo = args.file_input
    if not arquivo.endswith(".csv"):
       arquivo += ".csv"
+
+   saida = args.saida
+   if not saida.endswith(".pdf"):
+         saida += ".pdf"
+
+   resultados = []
    
    get_credential(arquivo, resultados)
-   create_pdf(resultados)
+   create_pdf(saida, resultados)
+
+if __name__ == '__main__':
+   main()

@@ -1,7 +1,7 @@
 from reportlab.pdfgen import canvas
 
-def create_pdf(resultados):
-   pdf_resultados = canvas.Canvas("relatorio_senhas.pdf")
+def create_pdf(saida, resultados):
+   pdf_resultados = canvas.Canvas(saida)
    y = 750
 
    pdf_resultados.drawString(100, 800, "Relatório de senhas vazadas")
