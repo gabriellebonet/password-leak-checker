@@ -11,13 +11,14 @@ O script lê um CSV com usuários e senhas, gera o hash SHA-1 de cada senha e co
 - A comparação do restante do hash acontece **localmente**, e o número de vazamentos é registrado.
 - Usuários com senha encontrada são listados no PDF gerado.
 - A cada consulta o script aguarda 1,3s para respeitar o rate limit da API.
+- Exibe o progresso em tempo real no terminal através de uma barra dinâmica (`tqdm`).
 
 ## Como usar
 
-Precisa do Python 3 e das dependências `requests` e `reportlab`. Recomendo usar um ambiente virtual para não conflitar com os pacotes do seu sistema:
+Precisa do Python 3 e das dependências `requests`, `reportlab` e `tqdm`. Recomendo usar um ambiente virtual para não conflitar com os pacotes do seu sistema:
 
 ```bash
-git clone https://github.com/gabriellebonet/password-leak-checker.git
+git clone [https://github.com/gabriellebonet/password-leak-checker.git](https://github.com/gabriellebonet/password-leak-checker.git)
 cd password-leak-checker
 
 # cria e ativa o ambiente virtual
@@ -25,7 +26,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # instala as dependências dentro do ambiente
-pip install requests reportlab
+pip install requests reportlab tqdm
 ```
 
 Rode o script passando o CSV com as credenciais:
@@ -59,8 +60,8 @@ maria.souza,UmSegredo!2026
 
 Com o script rodando:
 
-- **Senha vazada:** use uma senha fraca conhecida (ex: `123456`) → o terminal mostra quantas vezes ela apareceu em vazamentos e o usuário entra no PDF.
-- **Senha segura:** use uma senha longa e aleatória → aparece "Zero vazamentos!" e o usuário não vai pro PDF.
+- **Senha vazada (ex: `123456`):** o usuário entra no PDF.
+- **Senha segura:** o usuário não vai pro PDF.
 - **Sem internet / API fora do ar:** o script avisa o erro daquele usuário e continua com os demais.
 
 No final da execução, abra o PDF gerado na pasta do projeto.
